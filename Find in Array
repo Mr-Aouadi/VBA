@@ -1,1 +1,31 @@
 
+Option Explicit
+
+Public Function FindinArray(MyArray As Variant, MySearchItem As String) As Variant
+
+Dim MatchAdress() As Variant
+Dim i, j, k As Integer
+
+k = 1
+
+ReDim MatchAdress(UBound(MyArray, 1) * UBound(MyArray, 2))
+
+For i = LBound(MyArray, 1) To UBound(MyArray, 1) ' Get the number of rows.
+  
+  For j = LBound(MyArray, 2) To UBound(MyArray, 2) ' Get the number of columns.
+
+    If MyArray(i, j) = MySearchItem Then 'check if there is match
+          
+      MatchAdress(k) = i & "," & j 'get match line nr , colun nr
+      
+      k = k + 1
+  
+    End If
+    
+  Next
+  
+Next
+
+FindinArray = MatchAdress
+
+End Function
