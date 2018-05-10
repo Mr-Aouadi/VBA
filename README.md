@@ -1,2 +1,2 @@
 # VBA
-Some VBA codes that iI use to automate some boring stuff in the office
+Some VBA codes that I use to automate some boring stuff in the office
