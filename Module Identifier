@@ -1,0 +1,55 @@
+Sub Nom_Modl()
+
+'Extraire le nom de module du nom de la variante
+'du colonne selectionnée et mettre le resultat
+'dans la colone suivante(n+1)
+
+Dim LineIndex   As Long
+Dim DernLigne   As Long
+Dim Modul_Type  As String
+
+
+DernLigne = Range("A" & Rows.Count).End(xlUp).Row
+LineIndex = 0
+
+Do Until LineIndex = DernLigne
+  
+    LineIndex = LineIndex + 1
+    
+    Modul_Type = Mid(Cells(LineIndex, 1), 4, 3)
+    
+    Select Case Modul_Type
+      
+       Case "3IR"
+       
+          Cells(LineIndex, 2) = "VT" & Mid(Cells(LineIndex, 1), 7, 1)
+          
+       Case "3IL"
+       
+          Cells(LineIndex, 2) = "VT" & Mid(Cells(LineIndex, 1), 7, 1)
+      
+       Case "13G"
+        
+          Cells(LineIndex, 2) = Mid(Cells(LineIndex, 1), 8, 3)
+       
+       Case "3MS"
+        
+          Cells(LineIndex, 2) = "VT" & Mid(Cells(LineIndex, 1), 6, 3)
+          
+       Case "3M3"
+        
+          Cells(LineIndex, 2) = "VT" & Mid(Cells(LineIndex, 1), 5, 3)
+          
+       Case "3M1"
+        
+          Cells(LineIndex, 2) = "VT" & Mid(Cells(LineIndex, 1), 5, 3)
+          
+      Case "3M2"
+        
+          Cells(LineIndex, 2) = "VT" & Mid(Cells(LineIndex, 1), 5, 3)
+     
+    End Select
+    
+Loop
+  
+End Sub
