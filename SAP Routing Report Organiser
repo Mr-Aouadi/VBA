@@ -1,0 +1,78 @@
+Option Explicit
+'must be rewrited using arrays and procedures
+Sub run()
+
+Dim trFileToOpen As Variant
+Dim LastRange As Range
+Dim LastRange1 As Range
+Dim Lastcol As Long
+Dim LastRow As Long
+Dim Indexrow As Long, i As Long
+Dim fileName As String, d As String
+Dim diaFolder As FileDialog
+Dim wBook As Excel.Workbook
+Dim ResultSheet As Workbook
+
+
+
+'speed macro
+Dim xlCalc As XlCalculation
+    xlCalc = Application.Calculation
+    SpeedUp True
+
+
+
+'open file (ca51)
+Set diaFolder = Application.FileDialog(msoFileDialogFilePicker)
+diaFolder.AllowMultiSelect = False
+diaFolder.Show
+fileName = diaFolder.SelectedItems(1)
+Workbooks.Open diaFolder.SelectedItems(1)
+Set wBook = Workbooks.Open(fileName)
+Set diaFolder = Nothing
+
+'extract values
+Set LastRange = wBook.Worksheets(1).Range("F" & Rows.Count).End(xlUp)
+Set LastRange1 = wBook.Worksheets(1).Cells(LastRange.Row, LastRange.Column - 5)
+Lastcol = LastRange1.Column
+LastRow = LastRange1.Row
+Indexrow = 3
+d = Left(wBook.Worksheets(1).Range("A1").Value, 10)
+i = 2
+
+
+
+Do Until (Indexrow >= LastRow)
+ThisWorkbook.Worksheets(1).Cells(i, 1).Value = wBook.Worksheets(1).Cells(Indexrow, 3).Value
+Indexrow = Indexrow + 4
+ThisWorkbook.Worksheets(1).Cells(i, 7).Value = wBook.Worksheets(1).Cells(Indexrow, 16).Value
+Indexrow = Indexrow + 3
+    Do Until (Indexrow >= LastRow Or Left(wBook.Worksheets(1).Cells(Indexrow, 1).Value, 10) = d)
+        ThisWorkbook.Worksheets(1).Cells(i, 2).Value = wBook.Worksheets(1).Cells(Indexrow, 10).Value
+        ThisWorkbook.Worksheets(1).Cells(i, 3).Value = wBook.Worksheets(1).Cells(Indexrow, 12).Value
+        ThisWorkbook.Worksheets(1).Cells(i, 4).Value = wBook.Worksheets(1).Cells(Indexrow + 4, 10).Value
+        ThisWorkbook.Worksheets(1).Cells(i, 5).Value = wBook.Worksheets(1).Cells(Indexrow + 2, 10).Value
+        ThisWorkbook.Worksheets(1).Cells(i, 6).Value = wBook.Worksheets(1).Cells(Indexrow + 1, 10).Value
+        i = i + 1
+        Indexrow = Indexrow + 5
+    Loop
+    i = i + 1
+Indexrow = Indexrow + 2
+
+Loop
+
+
+'mise en page
+With ThisWorkbook.Worksheets(1)
+.Cells.Font.Size = 12
+.Cells.Font.Name = "Calibri"
+.Columns.AutoFit
+
+End With
+
+'clean speed function
+SpeedUp False, xlCalc
+
+End Sub
+
+
