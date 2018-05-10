@@ -1,0 +1,29 @@
+Sub fzeit()
+
+DernLigne = Range("A" & Rows.Count).End(xlUp).Row
+i = 1
+With Range("A:Z")
+Set Material = .Find("Control Key")
+If Not Material Is Nothing Then
+adrm = Material.Address
+Material.Select
+ro = ActiveCell.Row
+co = ActiveCell.Column
+Cells(ro - 5, co - 1).Copy
+
+For i = 1 To DernLigne
+
+
+
+If Not Cells(ro + i + 6, co) = "Control Key" Then
+Cells(ro + i, co - 1).PasteSpecial
+Else
+
+Cells(ro + i + 1, co - 1).Copy
+
+End If
+Next
+
+End If
+End With
+End Sub
