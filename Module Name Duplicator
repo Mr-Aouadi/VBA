@@ -1,0 +1,23 @@
+Sub Duplication()
+
+'Repeat first column items (fill with precedent item)
+'Don't forget to change range letter in DernLigne if needed
+
+Dim LineIndex   As Long
+Dim DernLigne   As Long
+
+LineIndex = 0
+DernLigne = Range("H" & Rows.Count).End(xlUp).Row
+
+
+For LineIndex = 2 To DernLigne
+
+  If Cells(LineIndex, 1) = vbNullString Then
+  
+    Cells(LineIndex, 1) = Cells(LineIndex - 1, 1)
+  
+  End If
+
+Next
+  
+End Sub
