@@ -1,0 +1,31 @@
+Sub bom_to_wirelist_form()
+
+Dim i, j, k As Integer
+Dim comp_lev, col_tab As Integer
+Dim new_tab(6, 6) As Variant
+
+j = 1
+
+'loop bom
+For i = 2 To 3
+
+  new_tab(j, 1) = Cells(i, 1)
+  new_tab(j, 2) = Cells(i, 2)
+  new_tab(j, 3) = Cells(i, 5)
+  comp_lev = comp_lev + 1
+  k = i
+  comp_lev = Cells(k, 3) + 1
+  'loop level
+  Do Until comp_lev = 1
+    new_tab(j, comp_lev + 2) = Cells(k, 5)
+    k = k + 1
+    comp_lev = Cells(k, 3)
+  Loop
+  
+  j = j + 1
+  
+Next
+
+ActiveWorkbook.Worksheets(2).Range("A:Z") = new_tab
+
+End Sub
