@@ -1,0 +1,160 @@
+Option Explicit
+Public Check_Counter As Integer
+Public Score_Counter As Integer
+Public Dest_Line As Integer
+Public Dest_Col As Integer
+
+Sub Chess_Trainer_Generate()
+
+
+'the file train you to memorize chess cordinates
+'the code give you random cordinates and you select cell
+'then the code shows you the right answer
+
+Dim Random_Cord As String
+
+Reset_chess
+Random_Cord = Random_Cordinates
+Cells(2, 11) = Random_Cord
+
+End Sub
+Sub Chess_Trainer_Solver()
+
+'Show solution
+
+Show_Correct_Cell (Cells(2, 11))
+
+End Sub
+
+Public Function Random_Cordinates() As String
+
+'Give random cordinates for main sub
+
+Dim Cord_Letter() As Variant
+Dim Cord_Number() As Variant
+Dim Number_Index As Integer
+Dim Letter_Index As Integer
+Dim Random_Number As Integer
+Dim Random_Letter As String
+
+Cord_Number = Array(1, 2, 3, 4, 5, 6, 7, 8)
+Cord_Letter = Array("A", "B", "C", "D", "E", "F", "G", "H")
+
+Number_Index = Int((7 - 0 + 1) * Rnd + 0)
+Letter_Index = Int((7 - 0 + 1) * Rnd + 0)
+
+Random_Number = Cord_Number(Number_Index)
+Random_Letter = Cord_Letter(Letter_Index)
+
+Random_Cordinates = Random_Letter & Random_Number
+
+End Function
+
+Public Sub Show_Correct_Cell(Dest_cell As String)
+
+'Show the correct cell
+
+Dest_Line = 9 - Right(Dest_cell, 1)
+Dest_Col = Convert_Lett_Nr(Dest_cell)
+
+Cells(Dest_Line, Dest_Col) = "X"
+
+Check_Counter = Check_Counter + 1
+
+score (Cells(11, 4))
+
+End Sub
+
+Public Function Convert_Lett_Nr(Dest_cell As String) As Integer
+
+'convert letter to column number
+
+Dim Letter As String
+
+Letter = Left(Dest_cell, 1)
+
+Select Case Letter
+
+  Case "A"
+  Convert_Lett_Nr = 1
+  Case "B"
+  Convert_Lett_Nr = 2
+  Case "C"
+  Convert_Lett_Nr = 3
+  Case "D"
+  Convert_Lett_Nr = 4
+  Case "E"
+  Convert_Lett_Nr = 5
+  Case "F"
+  Convert_Lett_Nr = 6
+  Case "G"
+  Convert_Lett_Nr = 7
+  Case "H"
+  Convert_Lett_Nr = 8
+
+End Select
+
+End Function
+Sub Reset_chess()
+
+'Clear all cells
+
+Cells(2, 11) = vbNullString
+
+With ThisWorkbook
+
+  Range("A1:H8") = vbNullString
+
+End With
+
+End Sub
+Sub Timer()
+
+'Countdown timer
+
+
+
+End Sub
+Sub score(ScoreCell As Integer)
+
+'score calculator
+
+If Cells(Dest_Line, Dest_Col) = ActiveCell Then
+
+  Score_Counter = Score_Counter + 1
+  Cells(4, 11) = Score_Counter & "/" & Check_Counter
+
+Else
+
+  Cells(4, 11) = Score_Counter & "/" & Check_Counter
+
+End If
+
+End Sub
+Sub Reset_Score()
+
+Cells(4, 11) = 0
+Check_Counter = 0
+Score_Counter = 0
+Reset_chess
+
+End Sub
+
+Sub Play_With_Time()
+
+'Play the game with countdown timer and automatic generator
+
+Dim Ctimer As Single
+
+Ctimer = Now
+
+Do
+
+  Chess_Trainer_Generate
+  
+  Application.Wait (Now + TimeValue("0:00:05"))
+
+Loop Until (Ctimer - Now) >= 60
+
+End Sub
+
